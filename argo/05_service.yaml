@@ -1,0 +1,63 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: argo-server
+  namespace: argo
+spec:
+  ports:
+  - name: web
+    port: 80
+    targetPort: 2746
+  selector:
+    app: argo-server
+  type: LoadBalancer
+    
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   labels:
+#     app: minio
+#   name: minio
+
+# spec:
+#   ports:
+#   - port: 9000
+#     protocol: TCP
+#     targetPort: 9000
+#   selector:
+#     app: minio
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: postgres
+  name: postgres
+  namespace: argo
+spec:
+  ports:
+  - port: 5432
+    protocol: TCP
+    targetPort: 5432
+  selector:
+    app: postgres
+    
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: workflow-controller
+  name: workflow-controller-metrics
+  namespace: argo
+spec:
+  ports:
+  - name: metrics
+    port: 9090
+    protocol: TCP
+    targetPort: 9090
+  selector:
+    app: workflow-controller
